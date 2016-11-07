@@ -1,6 +1,6 @@
 # response codes:
 # 0 - all OK
-# 1 - user alredy authenticated
+# 1 - user with provided data alredy exist
 # 2 - no such user exist
 # 3 - error parsing data
 # 4 - error during working with database
@@ -11,18 +11,20 @@ response_dictionary = \
     {
         "response":
             {
-                "code": 1,
-                "message": "error"
+
             }
     }
 
-def form_response_dictionary(code):
+
+def form_response_dictionary(code, response_custom_fields=None):
+    if response_custom_fields is None:
+        response_custom_fields = {}
     if code == 0:
         response_dictionary['response']['code'] = 0
         response_dictionary['response']['message'] = "OK"
     if code == 1:
         response_dictionary['response']['code'] = 1
-        response_dictionary['response']['message'] = "User alredy authenticated"
+        response_dictionary['response']['message'] = "User with provided data alredy exist"
     if code == 2:
         response_dictionary['response']['code'] = 2
         response_dictionary['response']['message'] = "User not found"
@@ -35,4 +37,6 @@ def form_response_dictionary(code):
     if code == 5:
         response_dictionary['response']['code'] = 5
         response_dictionary['response']['message'] = "Unknown error happened"
+    for field in response_custom_fields:
+        response_dictionary['response'][field] = response_custom_fields[field]
     return response_dictionary

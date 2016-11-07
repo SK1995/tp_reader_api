@@ -1,0 +1,17 @@
+﻿CREATE TABLE Users (
+	user_id bigserial PRIMARY KEY NOT NULL,
+	token varchar(36) UNIQUE,
+	email varchar(30) UNIQUE NOT NULL,
+	password varchar(30) NOT NULL;
+	name varchar(20),
+	surname varchar(30),
+	patronymic varchar(30) DEFAULT 'Not Indicated',
+	sex varchar(1) DEFAULT 'U'
+)
+
+CREATE TABLE Book(
+	user_id bigint references Users(user_id),
+	path_to_book text,
+	name text,
+	book_id bigserial PRIMARY KEY NOT NULL
+	)
