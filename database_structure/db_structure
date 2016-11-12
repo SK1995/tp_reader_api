@@ -1,17 +1,64 @@
-﻿CREATE TABLE Users (
-	user_id bigserial PRIMARY KEY NOT NULL,
-	token varchar(36) UNIQUE,
-	email varchar(30) UNIQUE NOT NULL,
-	password varchar(30) NOT NULL;
-	name varchar(20),
-	surname varchar(30),
-	patronymic varchar(30) DEFAULT 'Not Indicated',
-	sex varchar(1) DEFAULT 'U'
-)
+﻿- Table: books
 
-CREATE TABLE Book(
-	user_id bigint references Users(user_id),
-	path_to_book text,
-	name text,
-	book_id bigserial PRIMARY KEY NOT NULL
-	)
+-- DROP TABLE books;
+
+CREATE TABLE books
+(
+  book_id bigint NOT NULL,
+  path_to_book text,
+  name text,
+  CONSTRAINT book_pkey PRIMARY KEY (book_id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE books
+  OWNER TO api_user;
+
+
+-- Table: user_to_book_link
+
+-- DROP TABLE user_to_book_link;
+
+CREATE TABLE user_to_book_link
+(
+  user_id bigint NOT NULL,
+  book_id bigint NOT NULL,
+  CONSTRAINT user_to_book_link_pkey PRIMARY KEY (user_id, book_id),
+  CONSTRAINT user_to_book_link_book_id_fkey FOREIGN KEY (book_id)
+      REFERENCES books (book_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT user_to_book_link_user_id_fkey FOREIGN KEY (user_id)
+      REFERENCES users (user_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE user_to_book_link
+  OWNER TO api_user;
+
+
+-- Table: users
+
+-- DROP TABLE users;
+
+CREATE TABLE users
+(
+  user_id bigserial NOT NULL,
+  token character varying(36),
+  email character varying(30) NOT NULL,
+  name character varying(20),
+  surname character varying(30),
+  patronymic character varying(30) DEFAULT 'Not Indicated'::character varying,
+  sex character varying(1) DEFAULT 'U'::character varying,
+  password character varying(30) NOT NULL,
+  CONSTRAINT users_pkey PRIMARY KEY (user_id),
+  CONSTRAINT users_email_key UNIQUE (email),
+  CONSTRAINT users_token_key UNIQUE (token)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE users
+  OWNER TO api_user;
