@@ -22,7 +22,7 @@ Flask-SQLAlchemy==2.1
 Flask-WhooshAlchemy==0.54a0
 Flask-WTF==0.8.4
 flup==1.0.2
-html5lib==0.999
+html5lib==0.99999999
 httplib2==0.8
 itsdangerous==0.24
 Jinja2==2.8
