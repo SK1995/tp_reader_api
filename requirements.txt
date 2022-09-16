@@ -28,7 +28,7 @@ itsdangerous==0.24
 Jinja2==2.8
 lockfile==0.8
 lxml==3.3.3
-Mako==1.0.4
+Mako==1.2.2
 MarkupSafe==0.23
 oauthlib==0.6.1
 oneconf==0.3.7.14.4.1
